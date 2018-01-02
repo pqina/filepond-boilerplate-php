@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>FilePond Sample Project</title>
+
+    <!-- Get FilePond styles from the CDN -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+
+    <style>
+        /* FilePond will automatically fill up all available horizontal space, best to limit it in some way */
+        form {
+            max-width:24em;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <form action="submit.php">
+
+        <input type="file" name="filepond" multiple>
+
+        <button type="submit">Submit</button>
+    
+    </form>
+
+    <!-- Get FilePond polyfills from the CDN -->
+    <script src="https://unpkg.com/filepond-polyfill/dist/filepond-polyfill.js"></script>
+
+    <!-- Get FilePond JavaScript from the CDN -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
+    
+    // Set default server location
+    FilePond.setOptions({
+        server: './api/'
+    });
+
+    // Create ponds on the page
+    var pond = FilePond.create( document.querySelector('input[type="file"]') );
+
+    </script>
+
+</body>
+</html>
