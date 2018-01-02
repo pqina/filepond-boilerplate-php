@@ -140,21 +140,21 @@ class RequestHandler
         // Handle posted files array
         $values = $_POST[$fieldName];
 
-        // if files has been defined, it means we've succesfully decoded a JSON string
-        if (isset($values)) {
-            
-            // If files are found, turn base64 strings into actual file objects
-            foreach ($values as $value) {
-                $obj = @json_decode($value);
-                // skip values that failed to be decoded
-                if (!isset($obj)) {
-                    continue;
-                }
-                array_push($items, self::createItem( self::createTempFile($obj) ) );
-            }
-
+        // Turn values in array if is submitted as single value
+        if (!is_array($values)) {
+            $values = isset($values) ? array($values) : array();
         }
 
+        // If files are found, turn base64 strings into actual file objects
+        foreach ($values as $value) {
+            $obj = @json_decode($value);
+            // skip values that failed to be decoded
+            if (!isset($obj)) {
+                continue;
+            }
+            array_push($items, self::createItem( self::createTempFile($obj) ) );
+        }
+        
         return $items;
     }
 
@@ -166,16 +166,21 @@ class RequestHandler
             return $items;
         }
 
-        $fileIds = $_POST[$fieldName];
+        // Handle posted ids array
+        $values = $_POST[$fieldName];
 
-        if (isset($fileIds)) {
-            foreach ($fileIds as $fileId) {
-                if ( self::isFileId($fileId) ) {
-                    array_push($items, $fileId);
-                }
-            }
+        // Turn values in array if is submitted as single value
+        if (!is_array($values)) {
+            $values = isset($values) ? array($values) : array();
         }
 
+        // test if value is actually a file id
+        foreach ($values as $value) {
+            if ( self::isFileId($value) ) {
+                array_push($items, $value);
+            }
+        }
+    
         return $items;
 
     }

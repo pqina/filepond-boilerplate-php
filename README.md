@@ -7,4 +7,4 @@ Install both Vagrant and VirtualBox to setup the test environment.
 
 Use your Terminal to navigate to the boilerplate project directory and run `vagrant up` to start the test enviroment.
 
-You can now access the boilerplate project at `http://filepond.sample` or `http://192.168.33.10`.
+You can now access the boilerplate project at `http://filepond.boilerplate` or `http://192.168.33.10`.

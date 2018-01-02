@@ -20,9 +20,9 @@
 </head>
 <body>
     
-    <form action="submit.php">
+    <form action="http://filepond.local.php/submit.php" method="post" enctype="multipart/form-data">
 
-        <input type="file" name="filepond" multiple>
+        <input type="file" name="filepond[]" multiple>
 
         <button type="submit">Submit</button>
     
@@ -37,7 +37,7 @@
     
     // Set default server location
     FilePond.setOptions({
-        server: './api/'
+        server: 'http://filepond.local.php/'
     });
 
     // Create ponds on the page
