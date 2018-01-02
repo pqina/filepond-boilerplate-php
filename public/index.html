@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>FilePond Sample Project</title>
 
@@ -20,7 +19,7 @@
 </head>
 <body>
     
-    <form action="http://filepond.local.php/submit.php" method="post" enctype="multipart/form-data">
+    <form action="api/submit.php" method="post" enctype="multipart/form-data">
 
         <input type="file" name="filepond[]" multiple>
 
@@ -37,7 +36,7 @@
     
     // Set default server location
     FilePond.setOptions({
-        server: 'http://filepond.local.php/'
+        server: 'api/'
     });
 
     // Create ponds on the page
