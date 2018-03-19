@@ -1,4 +1,4 @@
-# FilePond Boilerplate PHP
+# FilePond PHP Boilerplate
 
 Install both Vagrant and VirtualBox to setup the boilerplate environment.
 
