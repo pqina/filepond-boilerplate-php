@@ -127,6 +127,7 @@ class RequestHandler
             "name": "picture.jpg",
             "type": "image/jpeg",
             "size": 20636,
+            "metadata" : {...}
             "data": "/9j/4AAQSkZJRgABAQEASABIAA..."
         }
         */
@@ -147,15 +148,28 @@ class RequestHandler
 
         // If files are found, turn base64 strings into actual file objects
         foreach ($values as $value) {
+
+            // suppress error messages, we'll just investigate the object later
             $obj = @json_decode($value);
+
             // skip values that failed to be decoded
             if (!isset($obj)) {
                 continue;
             }
+
+            // test if this is a file object (matches the object described above)
+            if (!self::isEncodedFile($obj)) {
+                continue;
+            }
+
             array_push($items, self::createItem( self::createTempFile($obj) ) );
         }
         
         return $items;
+    }
+
+    private static function isEncodedFile($obj) {
+        return isset($obj->id) && isset($obj->data) && isset($obj->name) && isset($obj->type) && isset($obj->size);
     }
 
     private static function loadFilesFromTemp($fieldName) {
