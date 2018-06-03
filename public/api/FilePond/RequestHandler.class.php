@@ -60,8 +60,8 @@ class RequestHandler
         http_response_code(500);
     }
 
-    private static function createItem($args) {
-        return new namespace\Item($args);
+    private static function createItem($file, $id = null) {
+        return new namespace\Item($file, $id);
     }
 
     /**
@@ -191,7 +191,7 @@ class RequestHandler
         // test if value is actually a file id
         foreach ($values as $value) {
             if ( self::isFileId($value) ) {
-                array_push($items, $value);
+                array_push($items, self::createItem(self::getTempFile($value), $value));
             }
         }
     
@@ -199,19 +199,19 @@ class RequestHandler
 
     }
 
-    public static function save($files, $path = 'uploads' . DIRECTORY_SEPARATOR) {
+    public static function save($items, $path = 'uploads' . DIRECTORY_SEPARATOR) {
 
         // is list of files
-        if ( is_array($files) ) {
+        if ( is_array($items) ) {
             $results = [];
-            foreach($files as $file) {
-                array_push($results, self::saveFile($file, $path));
+            foreach($items as $item) {
+                array_push($results, self::saveFile($item, $path));
             }
             return $results;
         }
 
         // is single item
-        return self::saveFile($files, $path);
+        return self::saveFile($items, $path);
     }
 
     /**
@@ -341,26 +341,26 @@ class RequestHandler
 
     }
 
-    private static function saveFile($file, $path) {
+    private static function saveFile($item, $path) {
 
         // nope
-        if (!isset($file)) {
+        if (!isset($item)) {
             return false;
         }
 
         // if is file id
-        if (is_string($file)) {
-            return self::moveFileById($file, $path);
+        if (is_string($item)) {
+            return self::moveFileById($item, $path);
         }
 
         // is file object
         else {
-            return self::moveFileById($file->getId(), $path);
+            return self::moveFileById($item->getId(), $path, $item->getName());
         }
 
     }
 
-    private static function moveFileById($fileId, $path) {
+    private static function moveFileById($fileId, $path, $fileName = null) {
 
         // select all files in directory except .htaccess
         foreach(glob(self::getSecureTempPath() . $fileId . DIRECTORY_SEPARATOR . '*.*') as $file) {
@@ -370,7 +370,7 @@ class RequestHandler
 
             self::createDirectory($target);
 
-            rename($source, $target . basename($file));
+            rename($source, $target . (isset($fileName) ? basename($fileName) : basename($file)));
         }
 
         // remove directory
