@@ -54,7 +54,7 @@ class Item {
     }
 
     public function getType() {
-        return $this->file['mime'];
+        return $this->file['type'];
     }
 }
 
