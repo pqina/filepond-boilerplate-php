@@ -16,4 +16,13 @@ FilePond\RequestHandler::catchExceptions();
 $items = FilePond\RequestHandler::loadFilesByField('filepond');
 
 // Items will always be an array as multiple files could be submitted
-FilePond\RequestHandler::save($items, 'uploads');
+$result = FilePond\RequestHandler::save($items, 'uploads');
+
+foreach( $result as $key=>$value)
+{
+	if($value == 1) // The files which have been moved successfully. 
+	{
+		// The name of the file that can be used to save in database etc. 
+		echo $items[$key]->getName(); // 				
+	}	
+}
