@@ -4,8 +4,8 @@ Install both Vagrant and VirtualBox to setup the boilerplate environment.
 
 1. [Download and Install Vagrant](https://www.vagrantup.com/downloads.html)
 2. [Download and Install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-
-Use your Terminal to navigate to the boilerplate project directory and run `vagrant up` to start the project.
+3. Clone this repository using `git clone --recurse-submodules https://github.com/pqina/filepond-boilerplate-php.git` to make sure the submodule gets installed.
+4. Navigate into the directory and run `vagrant up` to start the project.
 
 You can now access the boilerplate project at `http://filepond.boilerplate` or `http://192.168.33.10`.
 
